@@ -1,0 +1,6 @@
+__pycache__/
+.env
+venv/
+.idea/
+sqlite.db
+.pytest_cache/
