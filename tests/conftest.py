@@ -1,7 +1,7 @@
 import pytest
 
 from app import create_app
-from db import db
+from db import db as database
 
 
 @pytest.fixture
@@ -15,18 +15,18 @@ def app():
 
 
 @pytest.fixture
-def database(app):
-    db.init_app(app)
-    db.drop_all()
-    db.create_all()
-    db.session.commit()
+def db(app):
+    database.init_app(app)
+    database.drop_all()
+    database.create_all()
+    database.session.commit()
 
-    yield db
+    yield database
 
     db.session.close()
 
 
 @pytest.fixture
-def client(app, database):
+def client(app, db):
     with app.test_client() as client:
         yield client
