@@ -7,6 +7,9 @@ class TestSearchDAO:
 
     @pytest.fixture
     def search_dao(self, db):
+        """
+        Создаём экземпляр SearchDAO для работы с БД
+        """
         return SearchDAO(db.session)
 
     def test_get_all(self, search_dao):

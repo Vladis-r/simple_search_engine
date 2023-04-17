@@ -1,15 +1,13 @@
 import pytest
 
 from app import create_app
+from config import TestConfig
 from db import db as database
 
 
 @pytest.fixture
 def app():
-    app = create_app()
-    app.config.update({
-        "TESTING": True,
-    })
+    app = create_app(TestConfig)
     with app.app_context():
         yield app
 
@@ -23,7 +21,7 @@ def db(app):
 
     yield database
 
-    db.session.close()
+    database.session.close()
 
 
 @pytest.fixture
