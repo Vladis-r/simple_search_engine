@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Optional
 
 from elasticsearch import Elasticsearch
 from flask.cli import load_dotenv
@@ -19,7 +20,7 @@ class ElasticDAO:
     def __init__(self, es: Elasticsearch):
         self.es = es
 
-    def create_index(self, index_name: str, mapping: dict, settings: dict) -> None:
+    def create_index(self, index_name: str, mapping: dict, settings: Optional[dict]) -> None:
         """
         Создать новый индекс
         :param index_name: Имя индекса
@@ -28,7 +29,7 @@ class ElasticDAO:
         """
         self.es.indices.create(index=index_name, mappings=mapping, settings=settings)
 
-    def add_doc_from_file(self, index, file_json):
+    def add_doc_from_file(self, index: str, file_json):
         """
         Добавить новый документ в индекс.
         Файл в формате json должен быть добавлен в папку search_engine/data.
@@ -49,9 +50,10 @@ class ElasticDAO:
         """
         self.es.index(index=f"{index}", document={"id": pk, "text": text})
 
-    def search_for_doc(self, index, search_string):
+    def search_for_doc(self, index: str, search_string: str):
         """
         Поиск по тексту
+        :param index: Имя индекса
         :param search_string: Текст
         :return: Список ИД документов
         """
