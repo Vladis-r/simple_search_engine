@@ -22,7 +22,7 @@ class SearchDAO:
         """
         Получить объект по ИД
         """
-        return self.session.query(Data).get(pk)
+        return self.session.get(Data, pk)
 
     def get_objs_by_pk(self, list_pk: list[int]) -> list[Data]:
         """
@@ -35,7 +35,7 @@ class SearchDAO:
         """
         Удалить объект по ИД
         """
-        obj = self.session.query(Data).get(pk)
+        obj = self.session.get(Data, pk)
         if obj:
             self.session.delete(obj)
             self.session.commit()
